@@ -1,0 +1,38 @@
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/olalekanowolabi64/bug-free-octo-invention/master/chat-data/chat_mention_team_chat.csv" AS line
+
+MERGE (t:Chats {Name:line.chat_item})
+
+MERGE (u:Players {Name:line.user_id})
+
+MERGE (t) -[:MENTION {timestamps:line.date}]->(u)
+
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/olalekanowolabi64/bug-free-octo-invention/master/chat-data/chat_join_team_chat.csv" AS line
+
+
+
+MERGE (U:User {Name:line.user_id})
+
+
+
+MERGE (T:teamChat {Name:line.teamchat_session_id})
+
+
+
+MERGE (U) -[:JOIN {timestamps:line.date}]-> (T)
+
+
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/Aliht72/Big-Data/main/chat_respond_team_chat.csv" AS line
+
+MERGE (T):ChatId1 {Name:line.chatid1})
+
+MERGE (U:ChatId2 {Name:line.chatid1})
+
+MERGE (T) -[:respond {timestamps:line.date}]->(U)
+
+LOAD CSV WITH HEADERS FROM "https://raw.githubusercontent.com/olalekanowolabi64/bug-free-octo-invention/master/chat-data/chat_leave_team_chat.csv" AS line
+
+MERGE (U:User {Name:line.user_id})
+
+MERGE (T:teamChat {Name:line.teamchat_session_id})
+
+MERGE (U) -[:LEAVE {timestamps:line.date}]-> (T)
